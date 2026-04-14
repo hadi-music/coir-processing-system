@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function getEmbedUrl(url) {
@@ -28,7 +28,7 @@ function ValidationView({ machine, onBack }) {
       <header className="sticky top-0 bg-[#F9F7F2] text-[#0B4550] border-b-[2px] border-[#1A1A1A] px-4 md:px-6 py-4 flex items-center justify-between z-50">
         <button 
           onClick={onBack}
-          className="inline-flex items-center space-x-2 font-black font-mono text-sm md:text-base uppercase tracking-widest hover:text-[#1A1A1A]/70 transition-colors"
+          className="inline-flex items-center space-x-2 font-black font-mono text-sm md:text-base uppercase tracking-widest hover:text-[#1A1A1A]/70 transition-colors cursor-pointer outline-none"
         >
           <span>← BACK</span>
         </button>
@@ -88,89 +88,11 @@ function ValidationView({ machine, onBack }) {
   );
 }
 
-export default function ProcessMap() {
-  const [machinesList, setMachinesList] = useState([]);
+export default function MachinesView({ machinesList = [] }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAcknowledged, setIsAcknowledged] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    let url = import.meta.env.VITE_SHEET_URL || 'https://docs.google.com/spreadsheets/d/1IQJ4WW9H9UoJkRvpHYzphHDyUUSN3JpzfSB6hcL9j8k/export?format=csv';
-    
-    if (url.includes('/edit')) {
-      url = url.split('/edit')[0] + '/export?format=csv';
-    } else if (!url.includes('format=csv') && !url.includes('tqx=out:csv')) {
-      url = 'https://docs.google.com/spreadsheets/d/1IQJ4WW9H9UoJkRvpHYzphHDyUUSN3JpzfSB6hcL9j8k/export?format=csv';
-    }
-
-    fetch(url)
-      .then(res => res.text())
-      .then(text => {
-        
-        // 1. Parsing logic capable of handling internal quotes
-        const lines = text.trim().split('\n').slice(1);
-        
-        function parseCSVLine(str) {
-          let inQuotes = false;
-          let items = [];
-          let currentVal = "";
-          for (let i = 0; i < str.length; i++) {
-            const char = str[i];
-            if (char === '"' && str[i+1] === '"') {
-              currentVal += '"';
-              i++;
-            } else if (char === '"') {
-              inQuotes = !inQuotes;
-            } else if (char === ',' && !inQuotes) {
-              items.push(currentVal.trim());
-              currentVal = "";
-            } else {
-              currentVal += char;
-            }
-          }
-          items.push(currentVal.trim());
-          return items;
-        }
-
-        const parsedMachines = [];
-        lines.forEach(line => {
-          if (!line.trim()) return;
-          const parts = parseCSVLine(line);
-          // CSV Columns: Machine ID, Name, Capacity, Market Estimate, Field Notes, Technical Image URL, Technical Video URL
-          parsedMachines.push({
-            id: parts[0] || '',
-            name: parts[1] || '',
-            capacity: parts[2] || '',
-            price: parts[3] || '',
-            paragraph: parts[4] || '',
-            image: parts[5] || '',
-            video: parts[6] || ''
-          });
-        });
-        
-        setMachinesList(parsedMachines);
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.error("Could not fetch sheet data:", err);
-        setIsLoading(false);
-      });
-  }, []);
 
   const activeMachine = machinesList[activeIndex];
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-[#0B4550] flex flex-col items-center justify-center font-sans">
-        <div className="inline-flex items-center space-x-4 bg-[#E6FF2B] px-6 py-4 border-[2px] border-[#1A1A1A]">
-          <span className="w-3 h-3 bg-[#1A1A1A] animate-pulse"></span>
-          <span className="text-lg md:text-xl font-bold font-mono tracking-[0.2em] uppercase text-[#1A1A1A]">
-            Connecting to Master Database...
-          </span>
-        </div>
-      </div>
-    );
-  }
 
   if (machinesList.length === 0) {
     return (
@@ -192,7 +114,7 @@ export default function ProcessMap() {
   }
 
   return (
-    <div className="w-full min-h-screen bg-[#0B4550] flex flex-col items-center justify-start font-sans py-8 md:py-16">
+    <div className="w-full h-full bg-[#0B4550] flex flex-col items-center justify-start font-sans py-8 md:py-16">
       
       {/* Central Layout Wrapper */}
       <div className="w-full max-w-[1400px] px-4 md:px-8">
@@ -263,18 +185,6 @@ export default function ProcessMap() {
           
         </div>
       </div>
-
-      <style dangerouslySetInnerHTML={{__html: `
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 0px;
-          height: 0px;
-          display: none;
-        }
-        .custom-scrollbar {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
-        }
-      `}} />
     </div>
   );
 }
