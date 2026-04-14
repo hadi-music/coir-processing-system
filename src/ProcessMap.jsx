@@ -60,19 +60,7 @@ function ValidationView({ machine, machineData, onBack }) {
       <div className="flex-1 w-full max-w-7xl mx-auto p-4 md:p-12 font-sans flex flex-col">
         <div className="bg-[#F9F7F2] border-[2px] border-[#1A1A1A] p-4 md:p-12 mb-4 relative flex-1 flex flex-col">
           
-          {/* Header Section with Stacked Badges to prevent overlap */}
-          <div className="flex flex-col-reverse md:flex-row md:items-start justify-between gap-4 mb-6 md:mb-10 w-full">
-            <div className="inline-flex items-center space-x-3 bg-[#E6FF2B] px-3 md:px-4 py-2 border-[2px] border-[#1A1A1A] self-start">
-              <span className="w-2 h-2 md:w-2.5 md:h-2.5 bg-[#1A1A1A] animate-pulse"></span>
-              <span className="text-[10px] md:text-xs font-bold font-mono tracking-[0.1em] uppercase text-[#1A1A1A]">
-                Live Telemetry
-              </span>
-            </div>
-            
-            <div className="bg-[#1A1A1A] text-[#E6FF2B] py-2 px-3 md:px-4 border-[2px] border-[#1A1A1A] self-start font-mono text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">
-              Data Ref: {machine.id.substring(0,6).toUpperCase()}
-            </div>
-          </div>
+
 
           <h2 className="text-3xl md:text-5xl lg:text-7xl font-black uppercase text-[#1A1A1A] tracking-tighter leading-none mb-8 break-words">
             {machine.name} <br/> <span className="text-[#898A8D] text-lg md:text-3xl lg:text-4xl">Technical Validation</span>
@@ -285,70 +273,39 @@ export default function ProcessMap() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }} 
-              className="w-full shadow-none flex flex-col h-full bg-[#F9F7F2] border-[2px] border-[#1A1A1A] overflow-hidden"
+              className="w-full shadow-none flex flex-col h-full bg-[#F9F7F2] border-[2px] border-[#0B4550] overflow-hidden"
             >
-                {/* Tech Stamp Top Right - adjusted for mobile scaling */}
-                <div className="hidden sm:flex absolute top-0 right-0 p-2 md:p-3 border-b-[2px] border-l-[2px] border-[#1A1A1A] bg-[#0000FF] z-10 items-center justify-center mix-blend-multiply">
-                  <Fingerprint className="text-[#F9F7F2] w-4 h-4 md:w-5 md:h-5 mr-2 opacity-50" />
-                  <span className="text-[#F9F7F2] font-mono text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em]">
-                    DATA.REF.{activeMachine.id.substring(0,6).toUpperCase()}
-                  </span>
-                </div>
+
 
                 {/* Header Section */}
-                <div className="p-6 md:p-10 pb-6 border-b-[2px] border-[#1A1A1A] relative bg-[#F4F4F4] w-full">
-                  <div className="inline-flex items-center space-x-2 bg-[#E6FF2B] px-3 py-1.5 border-[2px] border-[#1A1A1A] mb-4">
-                    <span className="w-2 h-2 bg-[#1A1A1A] animate-pulse"></span>
-                    <span className="text-[10px] md:text-xs font-bold font-mono tracking-[0.1em] uppercase text-[#1A1A1A]">
-                      Live Telemetry
-                    </span>
-                  </div>
-                  <h2 className="text-3xl md:text-5xl lg:text-6xl font-black uppercase text-[#1A1A1A] tracking-tighter leading-[0.9] break-words pr-4 w-full">
+                <div className="p-8 md:p-12 lg:p-16 pb-8 border-b-[2px] border-[#0B4550] relative bg-[#F4F4F4] w-full">
+
+                  <h2 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase text-[#1A1A1A] tracking-tighter leading-[0.9] break-words pr-4 w-full">
                     {activeMachine.name}
                   </h2>
                 </div>
 
-                {/* Tech Specs: Vertical List on Mobile, Grid on Desktop */}
-                <div className="flex flex-col md:grid md:grid-cols-2 bg-[#1A1A1A] gap-[2px] flex-1">
+                {/* Simplified Tech Specs */}
+                <div className="flex flex-col flex-1 bg-[#F9F7F2]">
                   
-                  {/* Block 1 & 2 Grouped list on Mobile */}
-                  <div className="bg-[#F9F7F2] flex flex-col w-full h-full">
-                    <div className="p-6 md:p-8 flex-1 flex flex-col justify-end border-b-[2px] border-[#1A1A1A]">
-                      <p className="text-[10px] md:text-xs font-bold text-[#898A8D] uppercase tracking-widest mb-2 font-mono flex items-center gap-2">
-                        <Zap className="w-3 h-3 md:w-4 md:h-4" /> Technical/Power
-                      </p>
-                      <p className="text-xl md:text-3xl font-black text-[#1A1A1A] uppercase tracking-tight break-words">
-                        {activeMachine.power}
-                      </p>
-                    </div>
-                    <div className="p-6 md:p-8 flex-1 flex flex-col justify-end">
-                      <p className="text-[10px] md:text-xs font-bold text-[#898A8D] uppercase tracking-widest mb-2 font-mono flex items-center gap-2">
-                        <Settings className="w-3 h-3 md:w-4 md:h-4" /> Output/Capacity
-                      </p>
-                      <p className="text-xl md:text-3xl font-black text-[#1A1A1A] uppercase tracking-tight break-words">
-                        {activeMachine.capacity}
-                      </p>
-                    </div>
+                  {/* Block 1: Output / Capacity */}
+                  <div className="flex-1 p-8 md:p-12 lg:p-16 flex flex-col justify-end border-b-[2px] border-[#0B4550]">
+                    <p className="text-sm md:text-base font-bold text-[#898A8D] uppercase tracking-widest mb-3 font-mono">
+                      Output / Capacity
+                    </p>
+                    <p className="text-4xl md:text-5xl lg:text-6xl font-black text-[#1A1A1A] uppercase tracking-tight break-words">
+                      {activeMachine.capacity}
+                    </p>
                   </div>
 
-                  {/* Block 3 & 4 */}
-                  <div className="flex flex-col bg-[#1A1A1A] gap-[2px] w-full h-full">
-                    <div className="bg-[#0000FF] p-6 md:p-8 flex-1 flex flex-col justify-end">
-                      <p className="text-[10px] md:text-xs font-bold text-[#F4F4F4]/70 uppercase tracking-widest mb-2 font-mono">
-                        Primary Function
-                      </p>
-                      <p className="text-xl md:text-3xl font-black text-[#F4F4F4] uppercase tracking-tight break-words">
-                        {activeMachine.function}
-                      </p>
-                    </div>
-                    <div className="bg-[#F9F7F2] p-6 md:p-8 flex-1 flex flex-col justify-end hover:bg-[#E6FF2B]/20 transition-colors">
-                      <p className="text-[10px] md:text-xs font-bold text-[#898A8D] uppercase tracking-widest mb-2 font-mono">
-                        Market Estimate
-                      </p>
-                      <p className="text-xl md:text-3xl font-black text-[#1A1A1A] uppercase tracking-tight break-words">
-                        {activeMachine.price}
-                      </p>
-                    </div>
+                  {/* Block 2: Market Estimate (Most Prominent) */}
+                  <div className="flex-1 p-8 md:p-12 lg:p-16 flex flex-col justify-end">
+                    <p className="text-sm md:text-base font-bold text-[#898A8D] uppercase tracking-widest mb-3 font-mono">
+                      Market Estimate
+                    </p>
+                    <p className="text-5xl md:text-7xl lg:text-8xl font-black text-[#1A1A1A] uppercase tracking-tighter break-words">
+                      {activeMachine.price}
+                    </p>
                   </div>
 
                 </div>
@@ -356,7 +313,7 @@ export default function ProcessMap() {
                 {/* Footer/CTA */}
                 <button 
                   onClick={() => setIsAcknowledged(true)}
-                  className="w-full block group cursor-pointer bg-[#E6FF2B] border-t-[2px] border-[#1A1A1A] hover:bg-[#1A1A1A] transition-colors duration-300 text-left outline-none mt-auto"
+                  className="w-full block group cursor-pointer bg-[#E6FF2B] border-t-[2px] border-[#0B4550] hover:bg-[#0B4550] transition-colors duration-300 text-left outline-none mt-auto"
                 >
                   <div className="px-6 py-5 md:px-10 md:py-6 flex justify-between items-center w-full">
                     <div>
