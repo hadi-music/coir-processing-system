@@ -253,9 +253,6 @@ export default function ProcessMap() {
                           {machine.name}
                         </h3>
                       </div>
-                      <div className={`p-1.5 md:p-2 border-[2px] flex-shrink-0 ${isActive ? 'bg-[#E6FF2B] border-[#1A1A1A]' : 'bg-transparent border-[#898A8D] group-hover:border-[#F4F4F4]'}`}>
-                        <Icon className={`w-4 h-4 md:w-5 md:h-5 ${isActive ? 'text-[#1A1A1A]' : 'text-[#898A8D] group-hover:text-[#F4F4F4]'}`} />
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -315,18 +312,10 @@ export default function ProcessMap() {
                   onClick={() => setIsAcknowledged(true)}
                   className="w-full block group cursor-pointer bg-[#E6FF2B] border-t-[2px] border-[#0B4550] hover:bg-[#0B4550] transition-colors duration-300 text-left outline-none mt-auto"
                 >
-                  <div className="px-6 py-5 md:px-10 md:py-6 flex justify-between items-center w-full">
-                    <div>
-                      <span className="block text-xl md:text-3xl font-black uppercase text-[#1A1A1A] group-hover:text-[#E6FF2B] tracking-tighter transition-colors">
-                        Information
-                      </span>
-                      <span className="text-[#1A1A1A] group-hover:text-[#F4F4F4] font-mono text-[10px] md:text-xs uppercase tracking-widest mt-1 block transition-colors">
-                        To Validation View
-                      </span>
-                    </div>
-                    <div className="w-12 h-12 md:w-16 md:h-16 border-[2px] border-[#1A1A1A] group-hover:border-[#E6FF2B] flex items-center justify-center transition-colors flex-shrink-0 ml-4">
-                      <Zap className="text-[#1A1A1A] group-hover:text-[#E6FF2B] w-6 h-6 md:w-8 md:h-8 transition-colors" />
-                    </div>
+                  <div className="px-6 py-5 md:px-10 md:py-8 flex justify-center items-center w-full text-center">
+                    <span className="block text-xl md:text-3xl font-black uppercase text-[#1A1A1A] group-hover:text-[#E6FF2B] tracking-tighter transition-colors w-full">
+                      VIEW TECHNICAL DETAILS
+                    </span>
                   </div>
                 </button>
 
