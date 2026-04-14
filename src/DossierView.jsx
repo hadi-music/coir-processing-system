@@ -28,7 +28,7 @@ export default function DossierView({ data, title }) {
 
           {/* Bottom section: Description block */}
           <div className="w-full border-t-[2px] border-[#0B4550] pt-8">
-             <p className="text-[#1A1A1A] font-mono text-sm md:text-base lg:text-lg leading-relaxed tracking-tight break-words whitespace-pre-wrap">
+             <p className="text-[#1A1A1A] font-mono text-base md:text-lg leading-normal tracking-wide break-words whitespace-pre-wrap">
                {data.description || "NO DATA AVAILABLE FOR THIS COMPONENT."}
              </p>
           </div>

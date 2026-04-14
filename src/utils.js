@@ -1,35 +1,58 @@
-export function parseCSVLine(str) {
+export function parseCSV(text) {
+  const rows = [];
+  let currentRow = [];
+  let currentValue = "";
   let inQuotes = false;
-  let items = [];
-  let currentVal = "";
-  for (let i = 0; i < str.length; i++) {
-    const char = str[i];
-    if (char === '"' && str[i+1] === '"') {
-      currentVal += '"';
-      i++;
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const nextChar = text[i + 1];
+
+    if (inQuotes && char === '"' && nextChar === '"') {
+      currentValue += '"';
+      i++; // Skip the next quote
     } else if (char === '"') {
       inQuotes = !inQuotes;
-    } else if (char === ',' && !inQuotes) {
-      items.push(currentVal.trim());
-      currentVal = "";
+    } else if (!inQuotes && char === ',') {
+      currentRow.push(currentValue.trim());
+      currentValue = "";
+    } else if (!inQuotes && (char === '\n' || char === '\r')) {
+      if (char === '\r' && nextChar === '\n') {
+        i++; // Handle CRLF
+      }
+      currentRow.push(currentValue.trim());
+      rows.push(currentRow);
+      currentRow = [];
+      currentValue = "";
     } else {
-      currentVal += char;
+      currentValue += char;
     }
   }
-  items.push(currentVal.trim());
-  return items;
+
+  // Push the final value and row if the CSV doesn't end with a newline
+  if (currentValue !== "" || currentRow.length > 0) {
+    currentRow.push(currentValue.trim());
+    rows.push(currentRow);
+  }
+
+  return rows;
 }
 
 export async function fetchAndParseCSV(url, type) {
   try {
     const res = await fetch(url);
     const text = await res.text();
-    const lines = text.trim().split('\n').slice(1);
+    
+    // Get all rows using the robust parser
+    const allRows = parseCSV(text);
+    
+    // Skip header row
+    const dataRows = allRows.slice(1);
     
     const parsedData = [];
-    lines.forEach(line => {
-      if (!line.trim()) return;
-      const parts = parseCSVLine(line);
+    dataRows.forEach(parts => {
+      // Basic check for empty rows
+      if (parts.length === 0 || (parts.length === 1 && parts[0] === "")) return;
       
       if (type === 'machines') {
         parsedData.push({
