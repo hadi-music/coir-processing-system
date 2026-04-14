@@ -14,7 +14,7 @@ function App() {
       </header>
 
       {/* MAIN CONTENT AREA */}
-      <main className="flex-1 mt-[60px]">
+      <main className="flex-1 w-full pt-20 px-2 md:px-0 pb-8">
         <ProcessMap />
       </main>
     </div>
