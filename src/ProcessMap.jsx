@@ -318,7 +318,7 @@ export default function ProcessMap() {
                   <div className="px-6 py-5 md:px-10 md:py-6 flex justify-between items-center w-full">
                     <div>
                       <span className="block text-xl md:text-3xl font-black uppercase text-[#1A1A1A] group-hover:text-[#E6FF2B] tracking-tighter transition-colors">
-                        Acknowledge
+                        Information
                       </span>
                       <span className="text-[#1A1A1A] group-hover:text-[#F4F4F4] font-mono text-[10px] md:text-xs uppercase tracking-widest mt-1 block transition-colors">
                         To Validation View
