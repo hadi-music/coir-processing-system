@@ -10,7 +10,7 @@ export default function DossierView({ data, title }) {
       
       <div className="w-full bg-[#F9F7F2] border-[2px] border-[#0B4550] p-6 md:p-12">
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase text-[#1A1A1A] tracking-tighter leading-none mb-8 break-words text-left">
-          {title} <br/> <span className="text-[#898A8D] text-2xl md:text-4xl">Technical Dossier</span>
+          {title}
         </h1>
 
         <div className="flex flex-col gap-8 w-full">
