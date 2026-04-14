@@ -159,14 +159,25 @@ export default function ProcessMap() {
 
   const activeMachine = machinesList[activeIndex];
 
-  // 4. Reliability message conditionally checking loading OR empty states
-  if (isLoading || machinesList.length === 0) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-[#0B4550] flex flex-col items-center justify-center font-sans">
         <div className="inline-flex items-center space-x-4 bg-[#E6FF2B] px-6 py-4 border-[2px] border-[#1A1A1A]">
           <span className="w-3 h-3 bg-[#1A1A1A] animate-pulse"></span>
           <span className="text-lg md:text-xl font-bold font-mono tracking-[0.2em] uppercase text-[#1A1A1A]">
             Connecting to Master Database...
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  if (machinesList.length === 0) {
+    return (
+      <div className="min-h-screen bg-[#0B4550] flex flex-col items-center justify-center font-sans p-6 text-center">
+        <div className="bg-[#F9F7F2] px-8 py-6 border-[2px] border-[#1A1A1A]">
+          <span className="text-xl md:text-3xl font-black font-mono tracking-widest uppercase text-[#1A1A1A]">
+            DATABASE EMPTY - PENDING INPUT.
           </span>
         </div>
       </div>
@@ -181,80 +192,28 @@ export default function ProcessMap() {
   }
 
   return (
-    <div className="w-full flex items-center justify-center font-sans">
-      <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-4 lg:gap-8 items-stretch lg:min-h-[80vh] p-2 md:p-6 lg:p-12">
+    <div className="w-full min-h-screen bg-[#0B4550] flex flex-col items-center justify-start font-sans py-8 md:py-16">
+      
+      {/* Central Layout Wrapper */}
+      <div className="w-full max-w-[1400px] px-4 md:px-8">
         
-        {/* STEPPER TIMELINE */}
-        <div className="w-full lg:w-1/3 xl:w-1/4 flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-hidden overflow-y-hidden lg:overflow-y-auto custom-scrollbar snap-x snap-mandatory lg:border-l-[2px] border-[#898A8D] mb-2 lg:mb-0 relative lg:pr-4 py-2 lg:py-0">
+        {/* Dynamic Responsive Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
           
-          <div className="hidden lg:block mb-6 pl-6 py-2 sticky top-0 bg-[#0B4550] z-10 border-b-[2px] border-[#898A8D]">
-            <h1 className="text-xl font-black uppercase text-[#F4F4F4] tracking-tighter flex items-center gap-2">
-              Process Map
-            </h1>
-          </div>
-
-          <div className="flex flex-row lg:flex-col gap-2 lg:gap-0 lg:pb-8 w-max lg:w-full px-2 lg:px-0">
-            {machinesList.map((machine, index) => {
-              const isActive = index === activeIndex;
-              
-              return (
-                <div 
-                  key={machine.id + index}
-                  onClick={() => setActiveIndex(index)}
-                  className={`snap-center flex-shrink-0 w-[240px] lg:w-full group relative flex items-center lg:pl-6 py-2 md:py-4 cursor-pointer transition-all duration-300 ${
-                    isActive ? 'lg:bg-[#1A1A1A] lg:w-[105%]' : 'hover:lg:bg-[#0B4550]/80'
-                  }`}
-                >
-                  <div 
-                    className={`hidden lg:block absolute left-[-9px] top-1/2 -translate-y-1/2 w-[16px] h-[16px] border-[2px] transition-colors duration-300 shadow-none ${
-                      isActive 
-                        ? 'bg-[#E6FF2B] border-[#1A1A1A] scale-125' 
-                        : 'bg-[#0B4550] border-[#898A8D] group-hover:border-[#E6FF2B]'
-                    }`}
-                  />
-                  
-                  <div 
-                    className={`flex-1 border-[2px] p-3 md:p-4 transition-all duration-300 w-full ${
-                      isActive ? 'border-[#E6FF2B] bg-[#1A1A1A]' : 'border-[#898A8D] lg:border-transparent lg:group-hover:border-[#898A8D] bg-[#0B4550]'
-                    }`}
-                  >
-                    <div className="flex flex-row items-center justify-between">
-                      <div className="pr-2 md:pr-4">
-                        <p className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] mb-1 font-mono" style={{ color: isActive ? '#F4F4F4' : '#898A8D' }}>
-                          Node {String(index + 1).padStart(2, '0')}
-                        </p>
-                        <h3 className={`text-base md:text-lg font-bold uppercase tracking-tight leading-tight truncate ${
-                          isActive ? 'text-[#E6FF2B]' : 'text-[#F4F4F4]'
-                        }`}>
-                          {machine.name}
-                        </h3>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* DETAIL PANEL */}
-        {activeMachine && (
-          <div className="w-full lg:w-2/3 xl:w-3/4 flex flex-col font-sans px-2 lg:px-0">
-            <AnimatePresence mode="wait">
+          <AnimatePresence>
+            {machinesList.map((machine, index) => (
               <motion.div
-                key={activeMachine.id}
+                key={machine.id || index}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }} 
+                transition={{ duration: 0.2, delay: index * 0.05 }} 
                 className="w-full shadow-none flex flex-col h-full bg-[#F9F7F2] border-[2px] border-[#0B4550] overflow-hidden"
               >
-
                   {/* Header Section */}
-                  <div className="p-8 md:p-12 lg:p-16 pb-8 border-b-[2px] border-[#0B4550] relative bg-[#F4F4F4] w-full">
-                    {/* 2. Machine Cards: Display Name as the H1 */}
-                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-[#1A1A1A] text-left uppercase tracking-tighter leading-[0.9] break-words pr-4 w-full">
-                      {activeMachine.name}
+                  <div className="p-8 md:p-10 pb-8 border-b-[2px] border-[#0B4550] relative bg-[#F4F4F4] w-full">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#1A1A1A] text-left uppercase tracking-tighter leading-[0.9] break-words w-full">
+                      {machine.name}
                     </h1>
                   </div>
 
@@ -262,22 +221,22 @@ export default function ProcessMap() {
                   <div className="flex flex-col flex-1 bg-[#F9F7F2]">
                     
                     {/* Block 1: Output / Capacity */}
-                    <div className="flex-1 p-8 md:p-12 lg:p-16 flex flex-col justify-end border-b-[2px] border-[#0B4550]">
-                      <p className="text-sm md:text-base font-bold text-[#898A8D] uppercase tracking-widest mb-3 font-mono">
+                    <div className="flex-1 p-8 md:p-10 flex flex-col justify-end border-b-[2px] border-[#0B4550]">
+                      <p className="text-xs md:text-sm font-bold text-[#898A8D] uppercase tracking-widest mb-3 font-mono">
                         Output / Capacity
                       </p>
-                      <p className="text-4xl md:text-5xl lg:text-6xl font-black text-[#1A1A1A] uppercase tracking-tight break-words">
-                        {activeMachine.capacity}
+                      <p className="text-3xl md:text-4xl lg:text-5xl font-black text-[#1A1A1A] tracking-tight break-words">
+                        {machine.capacity}
                       </p>
                     </div>
 
                     {/* Block 2: Market Estimate (Most Prominent) */}
-                    <div className="flex-1 p-8 md:p-12 lg:p-16 flex flex-col justify-end">
-                      <p className="text-sm md:text-base font-bold text-[#898A8D] uppercase tracking-widest mb-3 font-mono">
+                    <div className="flex-1 p-8 md:p-10 flex flex-col justify-end">
+                      <p className="text-xs md:text-sm font-bold text-[#898A8D] uppercase tracking-widest mb-3 font-mono">
                         Market Estimate
                       </p>
-                      <p className="text-5xl md:text-7xl lg:text-8xl font-black text-[#1A1A1A] uppercase tracking-tighter break-words">
-                        {activeMachine.price}
+                      <p className="text-4xl md:text-5xl lg:text-6xl font-black text-[#1A1A1A] tracking-tighter break-words">
+                        {machine.price}
                       </p>
                     </div>
 
@@ -285,21 +244,24 @@ export default function ProcessMap() {
 
                   {/* Footer/CTA */}
                   <button 
-                    onClick={() => setIsAcknowledged(true)}
+                    onClick={() => {
+                      setActiveIndex(index);
+                      setIsAcknowledged(true);
+                    }}
                     className="w-full block group cursor-pointer bg-[#E6FF2B] border-t-[2px] border-[#0B4550] hover:bg-[#0B4550] transition-colors duration-300 text-left outline-none mt-auto"
                   >
-                    <div className="px-6 py-5 md:px-10 md:py-8 flex justify-center items-center w-full text-center">
-                      <span className="block text-xl md:text-3xl font-black uppercase text-[#1A1A1A] group-hover:text-[#E6FF2B] tracking-tighter transition-colors w-full">
+                    <div className="px-6 py-6 flex justify-center items-center w-full text-center">
+                      <span className="block text-lg md:text-xl font-black uppercase text-[#1A1A1A] group-hover:text-[#E6FF2B] tracking-tighter transition-colors w-full">
                         VIEW TECHNICAL DETAILS
                       </span>
                     </div>
                   </button>
 
               </motion.div>
-            </AnimatePresence>
-          </div>
-        )}
-
+            ))}
+          </AnimatePresence>
+          
+        </div>
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `
