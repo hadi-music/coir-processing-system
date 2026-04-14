@@ -28,11 +28,16 @@ function App() {
           fetchAndParseCSV(urlLocation, 'dossier')
         ]);
 
-        // Assuming warehouse and location have at least 1 row, take the first one or null
+        const warehouse = warehouseRes.length > 0 ? warehouseRes[0] : null;
+        if (warehouse) warehouse.image = '/images/wh.jpg';
+
+        const location = locationRes.length > 0 ? locationRes[0] : null;
+        if (location) location.image = '/images/map.webp';
+
         setSystemData({
           machines: machinesRes,
-          warehouse: warehouseRes.length > 0 ? warehouseRes[0] : null,
-          location: locationRes.length > 0 ? locationRes[0] : null
+          warehouse,
+          location
         });
       } catch (err) {
         console.error("Critical Failure Synchronizing Data:", err);

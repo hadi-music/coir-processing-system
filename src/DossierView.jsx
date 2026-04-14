@@ -3,7 +3,7 @@ import React from 'react';
 export default function DossierView({ data, title }) {
   if (!data) return null;
 
-  const hasImage = data.image && data.image.startsWith('http');
+  const hasImage = data.image && (data.image.startsWith('http') || data.image.startsWith('/images/'));
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-16 font-sans flex flex-col items-center">
@@ -20,7 +20,7 @@ export default function DossierView({ data, title }) {
               <img 
                 src={data.image} 
                 alt={`${title} Technical Visualization`}
-                className="w-full h-full object-cover grayscale contrast-125 mix-blend-multiply" 
+                className="w-full h-full object-cover" 
                 onError={(e) => { e.target.style.display = 'none'; }}
               />
             </div>

@@ -3,6 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 function getEmbedUrl(url) {
   if (!url) return '';
+  
+  // Handle YouTube Shorts
+  if (url.includes('youtube.com/shorts/')) {
+    const id = url.split('/shorts/')[1].split('?')[0];
+    return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1`;
+  }
+
   if (url.includes('youtube.com/watch?v=')) {
     return url.replace('watch?v=', 'embed/') + '?autoplay=1&mute=1';
   }
@@ -53,7 +60,7 @@ function ValidationView({ machine, onBack }) {
                 <img 
                   src={machine.image} 
                   alt={`${machine.name} Technical Diagram`}
-                  className="w-full h-full object-cover grayscale contrast-125 mix-blend-multiply" 
+                  className="w-full h-full object-cover" 
                   onError={(e) => { e.target.style.display = 'none'; }}
                 />
               </div>
@@ -64,7 +71,7 @@ function ValidationView({ machine, onBack }) {
               <div className="border-[2px] border-[#1A1A1A] bg-[#1A1A1A] aspect-video relative flex items-center justify-center overflow-hidden w-full mb-4 md:mb-0">
                 <iframe 
                   src={getEmbedUrl(machine.video)} 
-                  className="w-full h-full grayscale brightness-75 contrast-125" 
+                  className="w-full h-full" 
                   frameBorder="0" 
                   allow="autoplay; encrypted-media; fullscreen" 
                   allowFullScreen
