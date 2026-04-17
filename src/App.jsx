@@ -39,10 +39,12 @@ function App() {
         ]);
 
         const warehouse = warehouseRes.length > 0 ? warehouseRes[0] : null;
-        if (warehouse) warehouse.image = '/images/wh.jpg';
+        // Only use local fallback if the sheet cell is empty
+        if (warehouse && !warehouse.image) warehouse.image = '/images/wh.jpg';
 
         const location = locationRes.length > 0 ? locationRes[0] : null;
-        if (location) location.image = '/images/map.webp';
+        // Only use local fallback if the sheet cell is empty
+        if (location && !location.image) location.image = '/images/map.webp';
 
         setSystemData({
           machines: machinesRes,
