@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import HomeView from './HomeView';
 import MachinesView from './MachinesView';
 import DossierView from './DossierView';
+import SolarView from './SolarView';
 import { fetchAndParseCSV } from './utils';
 import './index.css';
 
@@ -13,6 +14,15 @@ function App() {
     location: null
   });
   const [isSynchronizing, setIsSynchronizing] = useState(true);
+
+  // Transition helper to trigger the synchronization message
+  const handleSetView = (view) => {
+    setIsSynchronizing(true);
+    setTimeout(() => {
+      setCurrentView(view);
+      setIsSynchronizing(false);
+    }, 800); // 800ms for a "technical" feel
+  };
 
   useEffect(() => {
     async function loadAllData() {
@@ -56,7 +66,7 @@ function App() {
         <div className="flex items-center">
           {currentView !== 'HOME' && (
             <button
-              onClick={() => setCurrentView('HOME')}
+              onClick={() => handleSetView('HOME')}
               className="font-mono font-black text-sm md:text-base uppercase tracking-widest hover:text-[#1A1A1A]/70 transition-colors mr-6 outline-none cursor-pointer"
             >
               ← RETURN TO MAIN MENU
@@ -82,10 +92,11 @@ function App() {
           </div>
         ) : (
           <>
-            {currentView === 'HOME' && <HomeView setCurrentView={setCurrentView} />}
+            {currentView === 'HOME' && <HomeView setCurrentView={handleSetView} />}
             {currentView === 'MACHINES' && <MachinesView machinesList={systemData.machines} />}
             {currentView === 'WAREHOUSE' && <DossierView data={systemData.warehouse} title="WAREHOUSE" />}
             {currentView === 'LOCATION' && <DossierView data={systemData.location} title="LOCATION" />}
+            {currentView === 'SOLAR' && <SolarView />}
           </>
         )}
       </main>

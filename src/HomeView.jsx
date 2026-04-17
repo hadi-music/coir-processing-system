@@ -8,23 +8,30 @@ export default function HomeView({ setCurrentView }) {
       </h1>
       <button 
         onClick={() => setCurrentView('MACHINES')}
-        className="w-full bg-[#E6FF2B] text-[#1A1A1A] border-[2px] border-[#0B4550] py-8 px-6 text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-widest hover:bg-[#0B4550] hover:text-[#E6FF2B] transition-colors duration-300"
+        className="w-full bg-[#F9F7F2] text-[#0B4550] border-[2px] border-[#0B4550] py-8 px-6 text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-widest hover:bg-[#E6FF2B] hover:text-[#1A1A1A] transition-colors duration-300"
       >
         MACHINES
       </button>
 
       <button 
         onClick={() => setCurrentView('WAREHOUSE')}
-        className="w-full bg-[#E6FF2B] text-[#1A1A1A] border-[2px] border-[#0B4550] py-8 px-6 text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-widest hover:bg-[#0B4550] hover:text-[#E6FF2B] transition-colors duration-300"
+        className="w-full bg-[#F9F7F2] text-[#0B4550] border-[2px] border-[#0B4550] py-8 px-6 text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-widest hover:bg-[#E6FF2B] hover:text-[#1A1A1A] transition-colors duration-300"
       >
         WAREHOUSE
       </button>
 
       <button 
         onClick={() => setCurrentView('LOCATION')}
-        className="w-full bg-[#E6FF2B] text-[#1A1A1A] border-[2px] border-[#0B4550] py-8 px-6 text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-widest hover:bg-[#0B4550] hover:text-[#E6FF2B] transition-colors duration-300"
+        className="w-full bg-[#F9F7F2] text-[#0B4550] border-[2px] border-[#0B4550] py-8 px-6 text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-widest hover:bg-[#E6FF2B] hover:text-[#1A1A1A] transition-colors duration-300"
       >
         LOCATION
+      </button>
+
+      <button 
+        onClick={() => setCurrentView('SOLAR')}
+        className="w-full bg-[#F9F7F2] text-[#0B4550] border-[2px] border-[#0B4550] py-8 px-6 text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-widest hover:bg-[#E6FF2B] hover:text-[#1A1A1A] transition-colors duration-300"
+      >
+        SOLAR
       </button>
     </div>
   );
